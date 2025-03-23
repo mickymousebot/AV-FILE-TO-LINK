@@ -33,7 +33,10 @@ files = glob.glob(ppath)
 async def start():
     print('\n')
     print('Initializing Your Bot')
-    bot_info = await Webavbot.get_me()
+
+    # Start the Pyrogram client
+    await Webavbot.start()  # Await the start method
+    bot_info = await Webavbot.get_me()  # Now this will work
     await initialize_clients()
 
     # Load plugins
