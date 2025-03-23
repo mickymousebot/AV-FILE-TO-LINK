@@ -1,15 +1,6 @@
-import os
-import sys
-import glob
-import pytz
-import asyncio
-import logging
-import importlib
+import os, sys, glob, pytz, asyncio, logging, importlib
 from pathlib import Path
 from pyrogram import idle
-from aiohttp import web
-from typing import Union, Optional, AsyncGenerator
-from datetime import date, datetime
 
 # Logging Configuration
 logging.basicConfig(
@@ -22,10 +13,14 @@ logging.getLogger("aiohttp.web").setLevel(logging.ERROR)
 
 # Importing Required Modules
 from info import *
-from Script import script
+from typing import Union, Optional, AsyncGenerator
+from Script import script 
+from datetime import date, datetime 
+from aiohttp import web
+from web import web_server
+from web.server import Webavbot
 from utils import temp, ping_server
 from web.server.clients import initialize_clients
-from web.server import Webavbot  # Import Webavbot (already an instance)
 
 # Plugin Loading
 ppath = "plugins/*.py"
