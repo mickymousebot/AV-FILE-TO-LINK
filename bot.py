@@ -6,8 +6,7 @@ import asyncio
 import logging
 import importlib
 from pathlib import Path
-from pyrogram import idle
-from typing import Union, Optional, AsyncGenerator
+from pyrogram import idle, filters
 from datetime import date, datetime
 from aiohttp import web
 from web import web_server
@@ -36,7 +35,8 @@ async def start():
 
     # Start the Pyrogram client
     await Webavbot.start()  # Await the start method
-    bot_info = await Webavbot.get_me()  # Now this will work
+    bot_info = await Webavbot.get_me()  # Verify bot is started
+    logging.info(f"Bot started: {bot_info.username} (ID: {bot_info.id})")
     await initialize_clients()
 
     # Load plugins
@@ -50,7 +50,7 @@ async def start():
             load = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(load)
             sys.modules["plugins." + plugin_name] = load
-            print("Imported => " + plugin_name)
+            logging.info(f"Imported => {plugin_name}")
 
     # Ping server if on Heroku
     if ON_HEROKU:
@@ -81,6 +81,12 @@ async def start():
 
     # Keep the bot running
     await idle()
+
+# Add a test command handler
+@Webavbot.on_message(filters.command("start"))
+async def start_command(client, message):
+    logging.info(f"Received /start command from {message.from_user.id}")
+    await message.reply("Bot is working!")
 
 if __name__ == '__main__':
     try:
