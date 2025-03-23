@@ -11,8 +11,8 @@ from web.utils.render_template import render_page
 
 routes = web.RouteTableDef()
 
-#Dont Remove My Credit @AV_BOTz_UPDATE 
-#This Repo Is By @BOT_OWNER26 
+# Dont Remove My Credit @AV_BOTz_UPDATE 
+# This Repo Is By @BOT_OWNER26 
 # For Any Kind Of Error Ask Us In Support Group @AV_SUPPORT_GROUP
 
 @routes.get("/", allow_head=True)
@@ -50,13 +50,13 @@ async def stream_handler(request: web.Request):
     except FIleNotFound as e:
         raise web.HTTPNotFound(text=e.message)
     except (AttributeError, BadStatusLine, ConnectionResetError):
-        pass
+        return web.Response(status=500, text="Internal Server Error")  # Add return statement
     except Exception as e:
         logging.critical(e.with_traceback(None))
         raise web.HTTPInternalServerError(text=str(e))
 
-#Dont Remove My Credit @AV_BOTz_UPDATE 
-#This Repo Is By @BOT_OWNER26 
+# Dont Remove My Credit @AV_BOTz_UPDATE 
+# This Repo Is By @BOT_OWNER26 
 # For Any Kind Of Error Ask Us In Support Group @AV_SUPPORT_GROUP
 
 @routes.get(r"/{path:\S+}", allow_head=True)
@@ -76,15 +76,15 @@ async def stream_handler(request: web.Request):
     except FIleNotFound as e:
         raise web.HTTPNotFound(text=e.message)
     except (AttributeError, BadStatusLine, ConnectionResetError):
-        pass
+        return web.Response(status=500, text="Internal Server Error")  # Add return statement
     except Exception as e:
         logging.critical(e.with_traceback(None))
         raise web.HTTPInternalServerError(text=str(e))
 
 class_cache = {}
 
-#Dont Remove My Credit @AV_BOTz_UPDATE 
-#This Repo Is By @BOT_OWNER26 
+# Dont Remove My Credit @AV_BOTz_UPDATE 
+# This Repo Is By @BOT_OWNER26 
 # For Any Kind Of Error Ask Us In Support Group @AV_SUPPORT_GROUP
 
 async def media_streamer(request: web.Request, id: int, secure_hash: str):
@@ -168,7 +168,7 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
             "Content-Disposition": f'{disposition}; filename="{file_name}"',
             "Accept-Ranges": "bytes",
         },
-  )
-#Dont Remove My Credit @AV_BOTz_UPDATE 
-#This Repo Is By @BOT_OWNER26 
+    )
+# Dont Remove My Credit @AV_BOTz_UPDATE 
+# This Repo Is By @BOT_OWNER26 
 # For Any Kind Of Error Ask Us In Support Group @AV_SUPPORT_GROUP
