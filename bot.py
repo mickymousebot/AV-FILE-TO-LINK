@@ -41,7 +41,17 @@ async def handle(request):
 # Web Server Setup
 async def web_server():
     app = web.Application()
-    app.router.add_get("/", handle)  # Add a route for the root URL
+
+    # Add Routes
+    app.router.add_get("/", handle)  # Root URL
+    app.router.add_get("/health", lambda request: web.Response(text="OK"))  # Health check
+
+    # Add a catch-all handler for undefined routes
+    async def catch_all(request):
+        return web.Response(text="Not Found", status=404)
+
+    app.router.add_route("*", "/{tail:.*}", catch_all)
+
     return app
 
 # Main Bot Initialization
