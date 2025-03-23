@@ -31,12 +31,12 @@ from web.server import Webavbot  # Import Webavbot (already an instance)
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
 
-# Initialize Webavbot (already an instance)
-Webavbot.start()  # Use the imported Webavbot object directly
-
-# Create a new event loop
+# Create a new event loop and set it as the default
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
+
+# Initialize Webavbot (already an instance)
+Webavbot.start()  # Use the imported Webavbot object directly
 
 # Define a Simple Request Handler
 async def handle(request):
@@ -62,6 +62,8 @@ async def web_server():
 async def start():
     print('\n')
     print('Initializing Your Bot')
+
+    # Ensure all tasks use the same event loop
     bot_info = await Webavbot.get_me()  # Use the imported Webavbot object directly
     await initialize_clients()
 
