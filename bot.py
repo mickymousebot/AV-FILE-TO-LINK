@@ -25,13 +25,15 @@ from info import *
 from Script import script
 from utils import temp, ping_server
 from web.server.clients import initialize_clients
+from web.server import Webavbot  # Import Webavbot
 
 # Plugin Loading
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
 
 # Initialize Webavbot
-Webavbot.start()
+webavbot = Webavbot()  # Initialize the Webavbot object
+webavbot.start()       # Start the Webavbot
 loop = asyncio.get_event_loop()
 
 # Define a Simple Request Handler
@@ -58,7 +60,7 @@ async def web_server():
 async def start():
     print('\n')
     print('Initializing Your Bot')
-    bot_info = await Webavbot.get_me()
+    bot_info = await webavbot.get_me()  # Use the initialized webavbot object
     await initialize_clients()
 
     # Load Plugins
@@ -79,8 +81,8 @@ async def start():
         asyncio.create_task(ping_server())
 
     # Bot Information
-    me = await Webavbot.get_me()
-    temp.BOT = Webavbot
+    me = await webavbot.get_me()
+    temp.BOT = webavbot
     temp.ME = me.id
     temp.U_NAME = me.username
     temp.B_NAME = me.first_name
@@ -92,8 +94,8 @@ async def start():
     time = now.strftime("%H:%M:%S %p")
 
     # Send Restart Message
-    await Webavbot.send_message(LOG_CHANNEL, text=script.RESTART_TXT.format(today, time))
-    await Webavbot.send_message(ADMINS[0], text='<b>ʙᴏᴛ ʀᴇsᴛᴀʀᴛᴇᴅ !!</b>')
+    await webavbot.send_message(LOG_CHANNEL, text=script.RESTART_TXT.format(today, time))
+    await webavbot.send_message(ADMINS[0], text='<b>ʙᴏᴛ ʀᴇsᴛᴀʀᴛᴇᴅ !!</b>')
 
     # Start Web Server
     app = web.AppRunner(await web_server())
